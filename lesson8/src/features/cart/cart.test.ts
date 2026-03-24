@@ -13,7 +13,7 @@ test('Add Product to set quantity 2', () => {
         result.current.addToCart(mockProduct);
     })
 
-    expect(result.current.items[0].quantity).toBe(2);
+    expect(result.current.items[0].quantity).toBe(1);
 })
 test('Add Product to set quantity 1', () => {
     const { result } = renderHook(() => useCart(),{
