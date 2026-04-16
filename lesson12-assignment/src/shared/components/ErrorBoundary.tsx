@@ -1,3 +1,5 @@
+import {Component, type ErrorInfo, type ReactNode} from "react";
+import { logger } from "../lib/logger"
 // TODO: Build a class-based ErrorBoundary component.
 // React's error boundary API only exists on class components — there is no
 // hook version. This is the one place you still need `class extends Component`.
@@ -16,3 +18,32 @@
 // Hints:
 // - Import { Component, type ErrorInfo, type ReactNode } from 'react'
 // - Import { logger } from '@/shared/lib/logger'
+type Props = {
+    children: ReactNode;
+}
+
+type State = {
+    hasError: boolean;
+}
+
+export class ErrorBoundry extends Component<Props, State>{
+    state: State = {hasError: false};
+
+    static getDerivedStateFromError() : State {
+        return { hasError: true}
+    }
+
+    componentDidCatch(error: Error, info: ErrorInfo) {
+        logger.error("ErrorBoundary cought a render error", {error, info});
+    }
+    render() {
+        if(this.state.hasError){
+            return (
+                <div className="border-red-300 rounded bg-red-50 p-4 text-red-600">
+                    <p className="font-semibold">Something went Wrong</p>
+                </div>
+            )
+        }
+        return this.props.children;
+    }
+}

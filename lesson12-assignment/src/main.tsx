@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App.tsx';
+import {logger} from "./shared/lib/logger.ts"
 
 // TODO: Register two global error listeners on `window` so no error goes
 // unreported, even ones React cannot catch:
@@ -14,6 +15,13 @@ import App from './App.tsx';
 //
 // Each listener should call `logger.error(...)` with a descriptive message
 // and the actual error/reason from the event object.
+window.addEventListener("unhandledrejection", (event) =>{
+  logger.error("Unhandled promise rejection", event.reason)
+})
+
+window.addEventListener("error", (event) => {
+  logger.error("Uncought Error", event.error)
+})
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

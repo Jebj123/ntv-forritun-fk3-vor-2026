@@ -1,3 +1,4 @@
+import { ErrorBoundry } from '@/shared/components/ErrorBoundary';
 import { NavLink, Outlet } from 'react-router-dom';
 
 // TODO: Import your ErrorBoundary and wrap <Outlet /> with it so that if any
@@ -20,7 +21,9 @@ export function Layout() {
       </nav>
       <main className="mx-auto w-full max-w-6xl px-4 py-8">
         {/* TODO: wrap <Outlet /> with <ErrorBoundary> */}
+        <ErrorBoundry>
         <Outlet />
+        </ErrorBoundry>
       </main>
     </div>
   );
