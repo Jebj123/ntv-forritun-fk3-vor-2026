@@ -1,1 +1,7 @@
-describe('add', () => {});
+import { add } from './math';
+
+describe('add function', () => {
+  it('should add two numbers correctly', () => {
+    expect(add(1, 2)).toBe(3);
+  });
+});
