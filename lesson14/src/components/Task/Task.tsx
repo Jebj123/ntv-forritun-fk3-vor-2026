@@ -1,10 +1,5 @@
 import './Task.css';
-
-type TaskData = {
-  id: string;
-  title: string;
-  state: 'TASK_ARCHIVED' | 'TASK_INBOX' | 'TASK_PINNED';
-};
+import type { TaskData } from '../../Types/types';
 
 type TaskProps = {
   /** Composition of the task */

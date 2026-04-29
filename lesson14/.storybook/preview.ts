@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
+// @ts-ignore: side-effect import for CSS without type declarations
 import '../src/index.css';
 
 const preview: Preview = {
