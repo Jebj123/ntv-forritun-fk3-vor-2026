@@ -5,6 +5,7 @@ import { Layout } from '@/components/Layout';
 import { IndexPage } from './pages/IndexPage';
 import { LoginPage } from './pages/LoginPage';
 import { MemberWelcomePage } from './pages/MemberWelcomePage';
+import InboxScreen from './InboxScreens/InboxScreen';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="inbox" element={<InboxScreen />} />
       </Route>
     </Routes>
   );
