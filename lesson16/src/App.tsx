@@ -1,17 +1,29 @@
-import { useState } from 'react';
 import './App.css';
 import { Layout } from '@/components/Layout';
-import type { AppPage } from '@/navigation';
 import { AboutPage } from '@/pages/AboutPage';
 import { HomePage } from '@/pages/HomePage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import MembersPage from './pages/MembersPage';
+import { ProtectedRoute } from './auth/protectedRoute';
 
 function App() {
-  const [page, setPage] = useState<AppPage>('home');
 
   return (
-    <Layout activePage={page} onNavigate={setPage}>
-      {page === 'home' ? <HomePage /> : <AboutPage />}
-    </Layout>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="members" element={
+            <ProtectedRoute>
+              <MembersPage />
+            </ProtectedRoute>
+          } />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
