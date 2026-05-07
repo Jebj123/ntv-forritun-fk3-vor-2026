@@ -1,5 +1,6 @@
-import { useAuth } from '@/auth/useAuth';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
+import MembersPage from '@/pages/MembersPage';
 
 function navButtonClassName(isActive: boolean) {
   return [
@@ -11,14 +12,6 @@ function navButtonClassName(isActive: boolean) {
 }
 
 export function Layout() {
-  const { isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate('/');
-  }
-
   return (
     <div className="bg-background min-h-screen">
       <header className="border-border bg-card/50 border-b backdrop-blur-sm">
@@ -26,7 +19,7 @@ export function Layout() {
           <p className="text-foreground text-sm font-semibold tracking-tight">
             Lesson 16
           </p>
-          <nav className="flex flex-wrap gap-2" aria-label="Main navigation">
+          <nav className="flex flex-wrap items-center gap-2" aria-label="Main navigation">
             <NavLink
               to="/"
               end
@@ -40,30 +33,23 @@ export function Layout() {
             >
               About
             </NavLink>
-            {isAuthenticated && (
+            <SignedOut>
+              <SignInButton className="bg-gray-100 text-black rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer" />
+              <SignUpButton>
+                <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
               <NavLink
                 to="/members"
                 className={({ isActive }) => navButtonClassName(isActive)}
               >
                 Members
               </NavLink>
-            )}
-            {isAuthenticated ? (
-              <button
-                type="button"
-                className={navButtonClassName(false)}
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            ) : (
-              <NavLink
-                to="/login"
-                className={({ isActive }) => navButtonClassName(isActive)}
-              >
-                Login
-              </NavLink>
-            )}
+              <UserButton />
+            </SignedIn>
           </nav>
         </div>
       </header>
